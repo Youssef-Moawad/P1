@@ -14,13 +14,13 @@
     <div class="container">
       <h2>Example Usage:</h2>
       <ul>
-        <li><a href="api/2015-12-25">[project url]/api/2015-12-25</a></li>
-        <li><a href="api/1451001600000">[project url]/api/1451001600000</a></li>
+        <li><a href="/api/2015-12-25"></a></li>
+        <li><a href id="timeNow"="api/1451001600000">Time now</a></li>
       </ul>
 
       <h2>Example Output:</h2>
       <p>
-        <code>{"unix":1451001600000, "utc":"Fri, 25 Dec 2015 00:00:00 GMT"}</code>
+        <code id="result">{"unix":1451001600000, "utc":"Fri, 25 Dec 2015 00:00:00 GMT"}</code>
       </p>
     </div>
     <div class="footer">
@@ -28,5 +28,20 @@
         By <a href="https://www.freecodecamp.org/">freeCodeCamp.org</a>
       </p>
     </div>
+    <script>
+      const timeNow = document.getElementById('timeNow');
+      const result = document.getElementById('result');
+
+      timeNow.addEventListener('click', async (e) => {
+        e.preventDefault(); // prevent link from navigating away
+        try {
+          const res = await fetch('/api/'); // call your server endpoint
+          const data = await res.json();
+          result.textContent = JSON.stringify(data, null, 2); // show formatted JSON
+        } catch (err) {
+          result.textContent = 'Error fetching time';
+        }
+      });
+    </script>
   </body>
 </html>
